@@ -18,20 +18,17 @@ function calculateOrder(items, discountCode, taxRate = 0.18) {
         return total + item.price * item.quantity;
     }, 0);
 
-    // BUG: Discount is calculated correctly,
-    // but later it is added instead of subtracted.
+    // Calculate discount amount
     const discount = subtotal * discountRate;
 
-    // BUG: Tax should be calculated AFTER discount.
-    const tax = subtotal * taxRate;
+    // Calculate tax after discount is applied
+    const tax = (subtotal - discount) * taxRate;
 
-    // Free shipping for orders of 1000 or more.
-    // BUG: The condition is reversed.
-    const shipping = subtotal >= 1000 ? 100 : 0;
+    // Shipping: free for orders of 1000 or more, otherwise $100 fee
+    const shipping = subtotal >= 1000 ? 0 : 100;
 
-    // BUG: Discount is added instead of subtracted.
-    // BUG: Shipping logic is also incorrect.
-    const total = subtotal + discount + tax + shipping;
+    // Compute total: subtract discount, then add tax and shipping
+    const total = subtotal - discount + tax + shipping;
 
     return {
         subtotal,
