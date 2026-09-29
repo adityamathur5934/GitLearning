@@ -5,7 +5,7 @@ function calculateTotal(price, quantity) {
 
 function applyDiscount(total, discount) {
     // Bug: discount is added instead of subtracted
-    return total + (total * discount / 100);
+    return total - (total * discount / 100);
 }
 
 function checkout(price, quantity, discount) {
